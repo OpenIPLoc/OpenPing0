@@ -1,5 +1,4 @@
 <?php
-$userIp = '';
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // If the request path is like /ip/223.5.5.5 (or /ip/223.5.5.5/...), prefer that IP.
@@ -8,7 +7,7 @@ $routeIp = null;
 $path = trim($uri, '/');
 $parts = $path === '' ? [] : explode('/', $path);
 if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
-    $candidate = $parts[1];
+    $candidate = trim($parts[1]);
     if($candidate === 'getdns' || $candidate === 'peer')
     {
         switch ($candidate) {
@@ -38,6 +37,7 @@ if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
     }
 }
 
+$userIp = '';
 if ($routeIp !== null) {
     // Route-provided IP takes precedence
     $userIp = $routeIp;
@@ -70,14 +70,14 @@ $broadcast_status = false;
  */
 function fetch_ipdb_info(string $ip): array
 {
-    $url = 'https://ipdb.purecheat.com/api/v1/paas/ip/fetch';
+    $url = 'https://localhost:2053/api/v1/paas/ip/fetch';
     $concurrentTime = (int)(microtime(true) * 1000);
     $payload = [
         // API allows appid to be empty; only address is required for a simple lookup.
-        'appid' => '色猫娘',
+        'appid' => '猫娘',
         'address' => $ip,
         'timestamp' => $concurrentTime,
-        'datasign' => md5('色猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔好色公猫娘'),
+        'datasign' => md5('猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔好色公猫娘'),
     ];
 
     $ch = curl_init($url);
