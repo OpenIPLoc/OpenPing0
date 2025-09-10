@@ -1632,7 +1632,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
    </div>
 </div>
 <div class="footer" style="background: #333;width: 100%;color:#f0f0f0;text-align: center;">
-    © 2021 - 2025 ping0.ipyard.com 所有权利保留 | 广告位联系: https://www.cheatfirst.com
+    © 2021 - 2025 ping0.ipyard.com 所有权利保留 | 友情链接: https://www.cheatfirst.com | 想把谁IP标记成100%风险联系: risk@ipyard.com
 </div>
 </body>
 </html>
