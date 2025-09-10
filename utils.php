@@ -52,14 +52,15 @@ if ($routeIp !== null) {
 
 $concurrentIpAddr = $userIp;
 $asnNum = 0;
-$asnName = 'ceshi';
+$asnName = 'IPYard';
 $asnDomain = 'ipyard.com';
 $ip_longitude = '0.0';
 $ip_latitude = '0.0';
-$ip_city = 'chengshi';
-$ip_country = 'guojia';
-$ip_stateOProvince = 'shengfen';
+$ip_city = '';
+$ip_country = '';
+$ip_stateOProvince = '';
 $asnCompany = '';
+$broadcast_status = false;
 
 /**
  * Fetch IP info from IPDB API and populate variables.
@@ -69,14 +70,14 @@ $asnCompany = '';
  */
 function fetch_ipdb_info(string $ip): array
 {
-    $url = 'https://localhost:2053/api/v1/paas/ip/fetch';
+    $url = 'https://ipdb.purecheat.com/api/v1/paas/ip/fetch';
     $concurrentTime = (int)(microtime(true) * 1000);
     $payload = [
         // API allows appid to be empty; only address is required for a simple lookup.
-        'appid' => '猫娘',
+        'appid' => '色猫娘',
         'address' => $ip,
         'timestamp' => $concurrentTime,
-        'datasign' => md5('猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔好色公猫娘'),
+        'datasign' => md5('色猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔好色公猫娘'),
     ];
 
     $ch = curl_init($url);
@@ -189,6 +190,7 @@ function fetch_ipdb_info(string $ip): array
 
     $lat = isset($location['latitude']) ? (string)$location['latitude'] : ($inner['lat'] ?? '');
     $lon = isset($location['longitude']) ? (string)$location['longitude'] : ($inner['lon'] ?? '');
+    $nativeIP = $inner['nativeIPStatus'] ?? null;
 
     $result['ok'] = true;
     $result['data'] = [
@@ -201,6 +203,7 @@ function fetch_ipdb_info(string $ip): array
         'asn_prefix' => $asnPrefix,
         'latitude' => $lat,
         'longitude' => $lon,
+        'nativeIPStatus' => $nativeIP,
         'raw_inner' => $inner,
         'raw_outer' => $outer,
     ];
@@ -219,6 +222,7 @@ if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
     $ip_city = $fetchResult['data']['city'] ?? $ip_city;
     $ip_country = $fetchResult['data']['country'] ?? $ip_country;
     $ip_stateOProvince = $fetchResult['data']['state'] ?? $ip_stateOProvince;
+    if($ip_city == $ip_stateOProvince) $ip_stateOProvince = '';
     $ip_latitude = $fetchResult['data']['latitude'] ?? $ip_latitude;
     $ip_longitude = $fetchResult['data']['longitude'] ?? $ip_longitude;
     $asnNum = $fetchResult['data']['asn_code'] ?? $asnNum;
@@ -227,4 +231,5 @@ if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
     if (!empty($fetchResult['data']['asn_prefix'])) {
         $asnDomain = $fetchResult['data']['asn_prefix'];
     }
+    $broadcast_status = !empty($fetchResult['data']['nativeIPStatus']) && $fetchResult['data']['nativeIPStatus'] === 'Broadcast';
 }

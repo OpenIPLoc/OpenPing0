@@ -1348,7 +1348,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                         </span>
                     </div>
                     <div class="content">
-                                                <span class="label orange" style="background:limegreen;">原生 IP</span>
+                                                <?php if($broadcast_status): ?><span class="label orange" style="background: rgb(255, 170, 0);">广播 IP</span><?php else: ?><span class="label orange" style="background:limegreen;">原生 IP</span><?php endif; ?>
                                             </div>
                 </div>
                 
