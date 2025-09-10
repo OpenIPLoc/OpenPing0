@@ -1,18 +1,64 @@
 <?php
 $userIp = '';
-if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $forwardedIps = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-    $userIp = trim($forwardedIps[0]);
-} else {
-    $userIp = $_SERVER['REMOTE_ADDR'] ?? '';
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// If the request path is like /ip/223.5.5.5 (or /ip/223.5.5.5/...), prefer that IP.
+// Extract last segment when the first segment equals "ip" and validate it as an IP.
+$routeIp = null;
+$path = trim($uri, '/');
+$parts = $path === '' ? [] : explode('/', $path);
+if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
+    $candidate = $parts[1];
+    if($candidate === 'getdns' || $candidate === 'peer')
+    {
+        switch ($candidate) {
+	        case 'getdns':
+		        echo 'ipyard.com';
+		        break;
+	        default:
+		        http_response_code(204);
+		        break;
+        }
+        exit;
+    }
+    if (
+        filter_var($candidate, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
+        filter_var($candidate, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
+    ) {
+        $routeIp = $candidate;
+    } elseif (preg_match('/^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/', $candidate)) {
+        // If it's a domain, resolve to IP (gethostbyname only returns IPv4)
+        $resolvedIp = gethostbyname($candidate);
+        if (
+            filter_var($resolvedIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
+            filter_var($resolvedIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
+        ) {
+            $routeIp = $resolvedIp;
+        }
+    }
 }
+
+if ($routeIp !== null) {
+    // Route-provided IP takes precedence
+    $userIp = $routeIp;
+} else {
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $forwardedIps = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $userIp = trim($forwardedIps[0]);
+    } else {
+        $userIp = $_SERVER['REMOTE_ADDR'] ?? '';
+    }
+}
+
 $concurrentIpAddr = $userIp;
 $asnNum = 0;
 $asnName = 'ceshi';
 $asnDomain = 'ipyard.com';
-$ip_longitude = '';
-$ip_latitude = '';
+$ip_longitude = '0.0';
+$ip_latitude = '0.0';
 $ip_city = 'chengshi';
+$ip_country = 'guojia';
+$ip_stateOProvince = 'shengfen';
 $asnCompany = '';
 
 /**
@@ -30,7 +76,7 @@ function fetch_ipdb_info(string $ip): array
         'appid' => '猫娘',
         'address' => $ip,
         'timestamp' => $concurrentTime,
-        'datasign' => md5('猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔公猫娘'),
+        'datasign' => md5('猫娘'.$ip.$concurrentTime.'可爱变态二次元萝莉魅魔好色公猫娘'),
     ];
 
     $ch = curl_init($url);
@@ -171,6 +217,8 @@ if (!empty($concurrentIpAddr)) {
 
 if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
     $ip_city = $fetchResult['data']['city'] ?? $ip_city;
+    $ip_country = $fetchResult['data']['country'] ?? $ip_country;
+    $ip_stateOProvince = $fetchResult['data']['state'] ?? $ip_stateOProvince;
     $ip_latitude = $fetchResult['data']['latitude'] ?? $ip_latitude;
     $ip_longitude = $fetchResult['data']['longitude'] ?? $ip_longitude;
     $asnNum = $fetchResult['data']['asn_code'] ?? $asnNum;

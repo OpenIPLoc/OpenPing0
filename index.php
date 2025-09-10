@@ -1243,7 +1243,7 @@ include_once(__DIR__.'/utils.php');
                         IP 位置
                     </div>
                     <div class="content">
-                        <?php echo $ip_city; ?>                        <span class="report" @click="showErrorReport">错误提交</span>
+                        <?php echo $ip_country.' '.$ip_stateOProvince.' '.$ip_city; ?>                        <span class="report" @click="showErrorReport">错误提交</span>
                     </div>
                 </div>
                 <div class="line asn">
@@ -1421,11 +1421,6 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                 
             </a>
         </div>
-        
-        <div class="asninfo otherinfo-switch">
-            <div :class="['switch', otherinfotab=='all' ? 'active' : '']" @click="otherinfotab='all'">显示所有</div>
-            <div :class="['switch', otherinfotab=='idc' ? 'active' : '']" @click="otherinfotab='idc'">显示 IDC</div>
-        </div>
         <div class="adrow">
             <div rel="noopener nofollow"  target="_blank" style="display:flex; align-items: center;justify-content: center;position: relative;" >
                
@@ -1495,7 +1490,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
             </div>
             <div class="line">
                 <div>IP位置:</div>
-                <div style="color:#aaa;"><?php echo $asnCity; ?></div>
+                <div style="color:#aaa;"><?php echo $ip_country.' '.$ip_stateOProvince.' '.$ip_city; ?></div>
             </div>
             <div class="line line-newaddr">
                 <div><span style="color:red;margin-right: 3px;">*</span>正确的IP位置:</div>
@@ -1523,7 +1518,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
     window.rdns = ''
     window.longitude = '<?php echo $ip_longitude; ?>'
     window.latitude = '<?php echo $ip_latitude; ?>'
-    window.loc = `<?php echo $ip_city; ?>`
+    window.loc = `<?php echo $ip_country.' '.$ip_stateOProvince.' '.$ip_city; ?>`
 </script>
 <script src="/static/js/check.js"></script>
 <script>
