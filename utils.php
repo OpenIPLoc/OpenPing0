@@ -53,7 +53,7 @@ if ($routeIp !== null) {
 $concurrentIpAddr = $userIp;
 $asnNum = 0;
 $asnName = 'IPYard';
-$asnDomain = 'ipyard.com';
+$asnIPPrefix = 'ipyard.com';
 $ip_longitude = '0.0';
 $ip_latitude = '0.0';
 $ip_city = '';
@@ -61,6 +61,7 @@ $ip_country = '';
 $ip_stateOProvince = '';
 $asnCompany = '';
 $broadcast_status = false;
+$asnDomain = '';
 
 /**
  * Fetch IP info from IPDB API and populate variables.
@@ -191,6 +192,7 @@ function fetch_ipdb_info(string $ip): array
     $lat = isset($location['latitude']) ? (string)$location['latitude'] : ($inner['lat'] ?? '');
     $lon = isset($location['longitude']) ? (string)$location['longitude'] : ($inner['lon'] ?? '');
     $nativeIP = $inner['nativeIPStatus'] ?? null;
+    $asn_domain = $inner['domain'] ?? null;
 
     $result['ok'] = true;
     $result['data'] = [
@@ -204,6 +206,7 @@ function fetch_ipdb_info(string $ip): array
         'latitude' => $lat,
         'longitude' => $lon,
         'nativeIPStatus' => $nativeIP,
+		'domain' => $asn_domain,
         'raw_inner' => $inner,
         'raw_outer' => $outer,
     ];
@@ -229,7 +232,8 @@ if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
     $asnName = $fetchResult['data']['asn_name'] ?? $asnName;
     $asnCompany = $fetchResult['data']['asn_company'] ?? $asnCompany;
     if (!empty($fetchResult['data']['asn_prefix'])) {
-        $asnDomain = $fetchResult['data']['asn_prefix'];
+        $asnIPPrefix = $fetchResult['data']['asn_prefix'];
     }
+    $asnDomain = $fetchResult['data']['domain'] ?? $asnDomain;
     $broadcast_status = !empty($fetchResult['data']['nativeIPStatus']) && $fetchResult['data']['nativeIPStatus'] === 'Broadcast';
 }
