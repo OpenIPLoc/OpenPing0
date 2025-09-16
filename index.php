@@ -153,15 +153,15 @@ include_once(__DIR__.'/utils.php');
                 IP 查询
                 <sup style="color:red;margin-left: 2px;"></sup>
             </a>
-            <a :class="{'active': activeItem == 'latency'}" href="/">
+            <a :class="{'active': activeItem == 'latency'}" href="https://ipyard.com/#download">
                 Latency
                 <sup style="color:red;margin-left: 2px;">New</sup>
             </a>
-            <a :class="{'active': activeItem == 'ping'}" href="/">
+            <a :class="{'active': activeItem == 'ping'}" href="https://ipyard.com/#download">
                 Ping
             </a>
 
-            <a :class="{'active': activeItem == 'trace'}" href="/">
+            <a :class="{'active': activeItem == 'trace'}" href="https://ipyard.com/#download">
                 Trace
 
             </a>
