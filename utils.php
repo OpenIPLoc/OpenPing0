@@ -12,8 +12,18 @@ if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
     {
         switch ($candidate) {
 	        case 'getdns':
-		        echo 'ipyard.com';
-		        break;
+			{
+				$yard_hostname = '';
+				$rev = implode('.', array_reverse(explode('.', htmlspecialchars(trim($parts[2]))))) . ".in-addr.arpa";
+				$records = dns_get_record($rev, DNS_PTR);
+				if ($records && isset($records[0]['target'])) {
+					$yard_hostname = $records[0]['target'];
+				} else {
+					$yard_hostname = $ip;
+				}
+				echo empty($yard_hostname) ? "ipyard.com" : $yard_hostname;
+				break;
+			}
 	        default:
 		        http_response_code(204);
 		        break;
@@ -71,7 +81,7 @@ $asnDomain = '';
  */
 function fetch_ipdb_info(string $ip): array
 {
-    $url = 'https://localhost:2053/api/v1/paas/ip/fetch';
+    $url = 'https://ipdb.purecheat.com/api/v1/paas/ip/fetch';
     $concurrentTime = (int)(microtime(true) * 1000);
     $payload = [
         // API allows appid to be empty; only address is required for a simple lookup.
