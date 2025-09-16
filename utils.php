@@ -81,8 +81,8 @@ $asnDomain = '';
  */
 function fetch_ipdb_info(string $ip): array
 {
-    $url = 'https://ipdb.purecheat.com/api/v1/paas/ip/fetch';
-    $concurrentTime = (int)(microtime(true) * 1000);
+    $url = 'https://localhost:2053/api/v1/paas/ip/fetch';
+    $concurrentTime = time() * 1000;
     $payload = [
         // API allows appid to be empty; only address is required for a simple lookup.
         'appid' => '猫娘',
