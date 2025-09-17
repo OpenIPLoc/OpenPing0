@@ -6,6 +6,31 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $routeIp = null;
 $path = trim($uri, '/');
 $parts = $path === '' ? [] : explode('/', $path);
+function get_reverse_hostname($ipyard_ip) {
+    $ipyard_ip = trim($ipyard_ip);
+    if (filter_var($ipyard_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+        $parts = explode('.', $ipyard_ip);
+        $rev = implode('.', array_reverse($parts)) . '.in-addr.arpa';
+    } elseif (filter_var($ipyard_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        $packed = inet_pton($ipyard_ip);
+        if ($packed === false) {
+            return null;
+        }
+        $hex = unpack('H*hex', $packed);
+        $hex = $hex['hex'];
+        $nibbles = str_split($hex);
+        $nibbles_rev = array_reverse($nibbles);
+        $rev = implode('.', $nibbles_rev) . '.ip6.arpa';
+    } else {
+        return null;
+    }
+    $records = dns_get_record($rev, DNS_PTR);
+    if ($records && isset($records[0]['target'])) {
+        return $records[0]['target'];
+    } else {
+        return 'ipyard.com';
+    }
+}
 if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
     $candidate = trim($parts[1]);
     if($candidate === 'getdns' || $candidate === 'peer')
@@ -13,15 +38,7 @@ if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
         switch ($candidate) {
 	        case 'getdns':
 			{
-				$yard_hostname = '';
-				$rev = implode('.', array_reverse(explode('.', htmlspecialchars(trim($parts[2]))))) . ".in-addr.arpa";
-				$records = dns_get_record($rev, DNS_PTR);
-				if ($records && isset($records[0]['target'])) {
-					$yard_hostname = $records[0]['target'];
-				} else {
-					$yard_hostname = $ip;
-				}
-				echo empty($yard_hostname) ? "ipyard.com" : $yard_hostname;
+				echo get_reverse_hostname($parts[2]) ?? "ipyard.com";
 				break;
 			}
 	        default:
