@@ -32,13 +32,13 @@ function get_reverse_hostname($ipyard_ip) {
     }
 }
 if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
-    $candidate = trim($parts[1]);
+    $candidate = rawurldecode(trim($parts[1]));
     if($candidate === 'getdns' || $candidate === 'peer')
     {
         switch ($candidate) {
 	        case 'getdns':
 			{
-				echo get_reverse_hostname($parts[2]) ?? "ipyard.com";
+				echo get_reverse_hostname(rawurldecode($parts[2])) ?? "ipyard.com";
 				break;
 			}
 	        default:
