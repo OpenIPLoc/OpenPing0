@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // If the request path is like /ip/223.5.5.5 (or /ip/223.5.5.5/...), prefer that IP.
@@ -31,7 +32,8 @@ function get_reverse_hostname($ipyard_ip) {
         return 'ipyard.com';
     }
 }
-if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
+$partCount = count($parts);
+if ($partCount > 1 && strtolower($parts[0]) === 'ip') {
     $candidate = rawurldecode(trim($parts[1]));
     if($candidate === 'getdns' || $candidate === 'peer')
     {
@@ -62,6 +64,16 @@ if (count($parts) >= 2 && strtolower($parts[0]) === 'ip') {
             $routeIp = $resolvedIp;
         }
     }
+}
+else if($partCount > 1 && strtolower($parts[0]) === 'aicheck')
+{
+	echo "\"<span class='label orange' style='background: limegreen;'>家庭宽带的概率为 100%<\/span>\"";
+	exit;
+}
+else if($partCount > 1)
+{
+	http_response_code(404);
+	die('The destination of your request url is not found on this server.');
 }
 
 $userIp = '';
@@ -172,15 +184,17 @@ function fetch_ipdb_info(string $ip): array
         if (!is_array($fieldArray)) {
             return $fallback;
         }
-        if (isset($fieldArray['zh-CN']) && $fieldArray['zh-CN'] !== '') {
-            return $fieldArray['zh-CN'];
+		/// TODO: Support more languages, the backend is multilingual but the frontend is not.
+		$first_lang = (strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'zh') !== false ? 'zh-CN' : 'en');
+        if (isset($fieldArray[$first_lang]) && $fieldArray[$first_lang] !== '') {
+            return $fieldArray[$first_lang];
         }
-        if (isset($fieldArray['en']) && $fieldArray['en'] !== '') {
-            return $fieldArray['en'];
+        if (isset($fieldArray[$first_lang]) && $fieldArray[$first_lang] !== '') {
+            return $fieldArray[$first_lang];
         }
         // pick first non-empty value
         foreach ($fieldArray as $v) {
-            if ($v !== '') {
+            if ($v !== '' && $v !== '-') {
                 return $v;
             }
         }
