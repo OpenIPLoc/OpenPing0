@@ -270,7 +270,7 @@ include_once(__DIR__.'/utils.php');
         var oHead = document.getElementsByTagName("HEAD").item(0);
         var oScript= document.createElement("script");
         oScript.type = "text/javascript";
-        oScript.src="/";
+        oScript.src="/geo/jsonp/ipv4cb";
         oHead.appendChild( oScript);
     }
     function trackad(id) {
@@ -358,7 +358,7 @@ include_once(__DIR__.'/utils.php');
         border-radius: 8px 8px 0 0;
         justify-content: space-between;
     }
-    
+
     .info>.content{
         font-size: 13px;
         background-color: white;
@@ -785,7 +785,7 @@ include_once(__DIR__.'/utils.php');
         cursor: pointer;
         z-index: 4;
     }
-    .adrow{
+    .aditems{
         width: 100%;
         height: 70px;
         display: flex;
@@ -793,7 +793,7 @@ include_once(__DIR__.'/utils.php');
         margin: 10px 0;
         color: #888;
     }
-    .adrow img{
+    .aditems img{
         border-radius: 10px;
     }
     .websites{
@@ -804,7 +804,7 @@ include_once(__DIR__.'/utils.php');
     }
     .websites>a{
         margin-top: 10px;
-        overflow:hidden; 
+        overflow:hidden;
         width:130px;
         height: 30px;
     }
@@ -837,7 +837,7 @@ include_once(__DIR__.'/utils.php');
         width: 260px;
         height: 80px;
     }*/
-    
+
     @media screen and (max-width: 1919px) {
         .container{
             min-width: 1000px;
@@ -850,7 +850,7 @@ include_once(__DIR__.'/utils.php');
             overflow-x: auto;
         }
     }
-    
+
     @media screen and (max-width: 1300px) {
         .container{
             width: 100%;
@@ -950,7 +950,7 @@ include_once(__DIR__.'/utils.php');
         }
     }
     @media screen and (max-width: 1200px){
-        .adrow{
+        .aditems{
             margin-left: 10px;
             margin-right: 10px;
             width: auto;
@@ -1001,7 +1001,7 @@ include_once(__DIR__.'/utils.php');
         .asninfo.prefixes,.asninfo.orgs,.asninfo.rirs{
             display: none;
         }
-        
+
         #bdmap{
             margin: 0;
         }
@@ -1137,7 +1137,7 @@ include_once(__DIR__.'/utils.php');
             text-align: center;
         }
     }
-    
+
 </style>
 
 <div id="check">
@@ -1157,7 +1157,7 @@ include_once(__DIR__.'/utils.php');
         </div>
     </div>
     <div class="container">
-        <div class="adrow toprow">
+        <div class="aditems toprow">
             <a rel="noopener nofollow" href="https://www.die.lu" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(3)">
                 <span class="closead">关闭</span>
                 <span class="tipad">广告</span>
@@ -1171,7 +1171,7 @@ include_once(__DIR__.'/utils.php');
             <a rel="noopener nofollow" href="https://www.62v.net" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
                 <span class="closead">关闭</span>
                 <span class="tipad">广告</span>
-                <img src="/static/images/ad/68b1bff33a5e068b1c0a6cbb71.gif" width="100%" style="max-height: 70px;">
+                <img src="/static/images/ad/68b1bff33a5e068b1c0a6cbb72.gif" width="100%" style="max-height: 70px;">
             </a>
         </div>
         <div id="ad_left" style="position: absolute;display: none;flex-direction:column;height: 600px;width: 80px;left:0;margin-left: -90px;">
@@ -1203,14 +1203,14 @@ include_once(__DIR__.'/utils.php');
                 <img src="/static/images/ad/4cdf762904f219b76197c147e0b91cb5.png" width="100%" style="max-height: 100%;">
             </a>
         -->
-        
+
         </div>
         <div class="info asninfo">
             <div class="title">
                 <div>
                     <img src="/static/images/lead.png" alt="">查询结果
                 </div>
-                
+
                 <a style="float:right;color:white;cursor: pointer;text-decoration: none;border-bottom: 1px solid deepskyblue;color:#2e67fe;
                 border-radius: 5px;border:1px solid #2e67fe;padding: 2px 8px;display: flex;align-items: center;" @click="toimage">
                     <img src="/static/images/jiandao.png" alt="" style="width: 10px;height: 10px;margin-right: 5px;">
@@ -1227,7 +1227,7 @@ include_once(__DIR__.'/utils.php');
                             <span style="margin-right: 5px;display: inline-block;">{{ showip ? ip : '************' }}</span>
                             <img :src="showip ? '/static/images/show.png' : '/static/images/hide.png'" alt="" @click="showip=!showip">
                         </div>
-                        
+
                         <span v-if="rdns.length>0">({{rdns}})</span>
 
                         <div class="op">
@@ -1288,7 +1288,7 @@ include_once(__DIR__.'/utils.php');
                 </div>
                                 <div class="line line-iptype">
                     <div class="name">
-                        <span>IP类型</span><a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;" 
+                        <span>IP类型</span><a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;"
                         href="/" target="_blank"
                         title='"IDC机房IP" 特指机房专用的IP，除此外的IP均标记为 "家庭宽带IP"。
 关于识别是 IDC机房IP 还是 家庭宽带IP，可以根据上面的 ASN所有者 和 企业是否为ISP来简单的判断。
@@ -1302,7 +1302,7 @@ Ping0 花费了大量的人力和时间对每一个IP段进行了标识，以准
                     </div>
                     <div class="content">
                                                 <span class="label green">家庭宽带IP</span>
-                        
+
                         <a class="ispwhy" href="/" target="_blank"
                         style="color: #2e67fe;
                         text-decoration: none;
@@ -1339,7 +1339,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                                 <div class="line line-nativeip">
                     <div class="name">
                         <span>原生 IP</span>
-                        <a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;" 
+                        <a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;"
                         href="/" target="_blank"
                         title="绝大部分的家庭宽带 IP 都属于原生 IP，部分当地的本地 IDC 提供商也会使用原生 IP。
 而一些全球性的跨国 IDC 服务商(AWS、GCP、Azure 等)为了方便管理，通常会购买一些大的 IP 段，然后广播到不同的国家, 这些即为 广播 IP。
@@ -1351,11 +1351,11 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                                                 <?php if($broadcast_status): ?><span class="label orange" style="background: rgb(255, 170, 0);">广播 IP</span><?php else: ?><span class="label orange" style="background:limegreen;">原生 IP</span><?php endif; ?>
                                             </div>
                 </div>
-                
+
                 <div class="line line-aicheck">
                     <div class="name">
                         <span>大模型检测</span>
-                        <a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;" 
+                        <a class="fielddesc" style="margin-left: 10px;font-size: 10px;color:deepskyblue;"
                         href="/" target="_blank"
                         title="使用AI大模型来判断是否为家庭宽带，该模型，基于 qwen2.5-0.5b 模型，使用1000多万条IP数据进行微调训练所得。大模型判断的结果仅供参考，准确率未知, 请自行判断。">(说明?)</a>
                         </span>
@@ -1398,32 +1398,43 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                 </div>
                             </div>
         </div>
-        <div class="adrow">
-        <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
-        
-        </a>
-        <a rel="noopener nofollow" href="/" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(5)">
-            <span class="closead">关闭</span>
-            <span class="tipad">广告</span>
-            <img src="/static/images/ad/189722caa53bcad8d2e7c2e0e1048d5f.png" width="100%" style="max-height: 100%;">
-        </a>
-        <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
-            
-        </a>
-    </div>
-        <div class="adrow" style="display: none;">
+        <div class="aditems">
+            <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
+
+            </a>
+            <a rel="noopener nofollow" href="/" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(5)">
+                <span class="closead">关闭</span>
+                <span class="tipad">广告</span>
+                <img src="/static/images/ad/189722caa53bcad8d2e7c2e0e1048d5f.png" width="100%" style="max-height: 100%;">
+            </a>
+            <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
+
+            </a>
+        </div>
+        <div class="aditems" style="display: none;">
             <a rel="noopener nofollow" href="" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(2)">
             </a>
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
-                
+
             </a>
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
-                
+
             </a>
         </div>
-        <div class="adrow">
+                <div class="asninfo">
+            <div class="title">
+                <div>
+                    <img src="/static/images/lead.png" alt="">地图定位
+                </div>
+            </div>
+            <div  id="bdmap">
+
+            </div>
+        </div>
+
+        <div class="aditems">
             <div rel="noopener nofollow"  target="_blank" style="display:flex; align-items: center;justify-content: center;position: relative;" >
-               
+
                <!-- <ins class="adsbygoogle"
                     style="display:inline-block;width:320px;height:70px"
                     data-ad-client="ca-pub-4408350776179053"
@@ -1478,7 +1489,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                 </a>
             </div>
         </div>
-        
+
     </div>
     <div id="error_report" v-show="errorreport" style="display: none;">
         <div class="title">错误提交</div>
@@ -1503,7 +1514,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
         </div>
         <div class="btnreport" @click="submitErrorReport">提交</div>
     </div>
-    
+
     <textarea id="copy" style="width: 1px;height: 1px;opacity: 0;position: absolute;" v-model="copydata" ref="copyele">
 
     </textarea>
@@ -1533,7 +1544,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
     })
     var width = document.documentElement.clientWidth
     if (width < 700) {
-        const rows = document.querySelectorAll('.adrow');
+        const rows = document.querySelectorAll('.aditems');
         rows.forEach(row => {
             const links = row.querySelectorAll('a');
             const validLinks = Array.from(links).filter(link => link.querySelector('img') !== null);
@@ -1545,7 +1556,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
         });
     }
     else if (width < 1100) {
-        const rows = document.querySelectorAll('.adrow');
+        const rows = document.querySelectorAll('.aditems');
         rows.forEach(row => {
             const links = row.querySelectorAll('a');
             const validLinks = Array.from(links).filter(link => link.querySelector('img') !== null);
