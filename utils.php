@@ -101,6 +101,7 @@ $ip_stateOProvince = '';
 $asnCompany = '';
 $broadcast_status = false;
 $asnDomain = '';
+$anycastPopTrack = false;
 
 /**
  * Fetch IP info from IPDB API and populate variables.
@@ -276,5 +277,6 @@ if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
         $asnIPPrefix = $fetchResult['data']['asn_prefix'];
     }
     $asnDomain = $fetchResult['data']['domain'] ?? $asnDomain;
-    $broadcast_status = !empty($fetchResult['data']['nativeIPStatus']) && $fetchResult['data']['nativeIPStatus'] === 'Broadcast';
+    $broadcast_status = !empty($fetchResult['data']['nativeIPStatus']) && ($fetchResult['data']['nativeIPStatus'] === 'Broadcast' || $fetchResult['data']['nativeIPStatus'] === 'Anycast');
+	$anycastPopTrack = !empty($fetchResult['data']['nativeIPStatus']) && $fetchResult['data']['nativeIPStatus'] === 'Anycast';
 }
