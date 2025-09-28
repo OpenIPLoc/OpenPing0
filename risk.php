@@ -1524,7 +1524,7 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
 <script type="text/javascript">
     window.ip = '<?php echo $concurrentIpAddr; ?>'
     window.tar= ''
-    window.ipnum = '114514'
+    window.ipnum = '<?php echo $ip2Number; ?>'
     window.asndomain = '<?php echo $asnDomain; ?>'
     window.orgdomain = '<?php echo $asnIPPrefix; ?>'
     window.rdns = ''
