@@ -102,6 +102,7 @@ $asnCompany = '';
 $broadcast_status = false;
 $asnDomain = '';
 $anycastPopTrack = false;
+$ip2Number = 114514;
 
 /**
  * Fetch IP info from IPDB API and populate variables.
@@ -235,6 +236,7 @@ function fetch_ipdb_info(string $ip): array
     $lon = isset($location['longitude']) ? (string)$location['longitude'] : ($inner['lon'] ?? '');
     $nativeIP = $inner['nativeIPStatus'] ?? null;
     $asn_domain = $inner['domain'] ?? null;
+    $numericRes = $inner['addressAsTenRadix'] ?? null;
 
     $result['ok'] = true;
     $result['data'] = [
@@ -249,6 +251,7 @@ function fetch_ipdb_info(string $ip): array
         'longitude' => $lon,
         'nativeIPStatus' => $nativeIP,
 		'domain' => $asn_domain,
+        'ipAsNum' => $numericRes,
         'raw_inner' => $inner,
         'raw_outer' => $outer,
     ];
@@ -277,6 +280,7 @@ if (!empty($fetchResult['ok']) && isset($fetchResult['data'])) {
         $asnIPPrefix = $fetchResult['data']['asn_prefix'];
     }
     $asnDomain = $fetchResult['data']['domain'] ?? $asnDomain;
+	$ip2Number = $fetchResult['data']['ipAsNum'] ?? 114514;
     $broadcast_status = !empty($fetchResult['data']['nativeIPStatus']) && ($fetchResult['data']['nativeIPStatus'] === 'Broadcast' || $fetchResult['data']['nativeIPStatus'] === 'Anycast');
 	$anycastPopTrack = !empty($fetchResult['data']['nativeIPStatus']) && $fetchResult['data']['nativeIPStatus'] === 'Anycast';
 }
