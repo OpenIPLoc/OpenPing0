@@ -1158,15 +1158,13 @@ include_once(__DIR__.'/utils.php');
     </div>
     <div class="container">
         <div class="aditems toprow">
-            <a rel="noopener nofollow" href="https://www.die.lu" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(3)">
+            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(3)">
                 <span class="closead">关闭</span>
                 <span class="tipad">广告</span>
                 <img src="/static/images/ad/8c0e97165f9193cadf2d90966867b770.gif" width="100%" style="max-height: 70px;">
             </a>
-            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(7)">
-                <span class="closead">关闭</span>
-                <span class="tipad">广告</span>
-                <img src="/static/images/ad/1cda98b9d4a5e24751ee79447e5a2148.gif" width="100%" style="max-height: 70px;">
+            <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
+
             </a>
             <a rel="noopener nofollow" href="https://www.62v.net" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
                 <span class="closead">关闭</span>
@@ -1402,10 +1400,8 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
 
             </a>
-            <a rel="noopener nofollow" href="/" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(5)">
-                <span class="closead">关闭</span>
-                <span class="tipad">广告</span>
-                <img src="/static/images/ad/189722caa53bcad8d2e7c2e0e1048d5f.png" width="100%" style="max-height: 100%;">
+                        <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
+
             </a>
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
 
@@ -1462,6 +1458,14 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>-->
             </div>
+        </div>
+        <div class="nextip">
+            <a href="/ip/<?php echo $previousIpAddress; ?>" target="_blank" style="padding-right: 30px;">
+                <img style="align-self: flex-start;width: 34px;height: 34px;margin-right: 30px;" src="/static/images/arrow_left.png" alt=""/>
+                <?php echo $previousIpAddress; ?>            </a>
+            <a href="/ip/<?php echo $nextIpAddress; ?>" target="_blank" style="padding-left:30px;">
+                <?php echo $nextIpAddress; ?>                <img style="align-self: flex-end; width: 34px; height: 34px;margin-left: 30px;" src="/static/images/arrow_right.png" alt="" />
+              </a>
         </div>
         <div style="border-top: 1px solid #f0f0f0;margin-top: 50px;" id="websites-wrap">
             <p style="height: 24px;line-height: 24px;margin-bottom: 0;margin-left:15px; border-bottom: 1px dashed;padding-bottom: 10px;">网站大全</p>

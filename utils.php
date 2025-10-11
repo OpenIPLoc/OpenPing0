@@ -103,6 +103,75 @@ $broadcast_status = false;
 $asnDomain = '';
 $anycastPopTrack = false;
 $ip2Number = 114514;
+$nextIpAddress = 'ipyard.com';
+$previousIpAddress = 'ip.ipyard.com';
+
+function generate_neighbor_ips($ip_address)
+{
+    if (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+        $long_ip = ip2long($ip_address);
+        if ($long_ip === false) {
+            return false;
+        }
+        $offset = 0x100;
+        $new_ip_plus = long2ip($long_ip + $offset);
+        $new_ip_minus = long2ip($long_ip - $offset);
+        if ($new_ip_plus === false || $new_ip_minus === false) {
+            return false;
+        }
+        return [
+            'plus' => trim($new_ip_plus),
+            'minus' => trim($new_ip_minus),
+        ];
+    } elseif (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        $binary_ip = @inet_pton($ip_address);
+        if ($binary_ip === false) {
+            return false;
+        }
+        $hex_ip = unpack('H*', $binary_ip)[1];
+        $bytes = str_split($hex_ip, 2);
+        ///TODO: Modify the /48 or /64 or /96 or /120 ip address?
+        // $idx = 14; for /120
+        $idx = 6;
+        $byte_val_plus = hexdec($bytes[$idx]) + 1;
+        $new_bytes_plus = $bytes;
+        if ($byte_val_plus > 0xFF) {
+            $new_bytes_plus[$idx] = '00';
+            $new_bytes_plus[$idx - 1] = str_pad(dechex(hexdec($bytes[$idx - 1]) + 1), 2, '0', STR_PAD_LEFT);
+        } else {
+            $new_bytes_plus[$idx] = str_pad(dechex($byte_val_plus), 2, '0', STR_PAD_LEFT);
+        }
+        $byte_val_minus = hexdec($bytes[$idx]) - 1;
+        $new_bytes_minus = $bytes;
+        if ($byte_val_minus < 0) {
+            $new_bytes_minus[$idx] = 'ff';
+            $new_bytes_minus[$idx - 1] = str_pad(dechex(hexdec($bytes[$idx - 1]) - 1), 2, '0', STR_PAD_LEFT);
+        } else {
+            $new_bytes_minus[$idx] = str_pad(dechex($byte_val_minus), 2, '0', STR_PAD_LEFT);
+        }
+        $new_hex_plus = implode('', $new_bytes_plus);
+        $new_hex_minus = implode('', $new_bytes_minus);
+        $new_ip_plus = inet_ntop(hex2bin($new_hex_plus));
+        $new_ip_minus = inet_ntop(hex2bin($new_hex_minus));
+        if ($new_ip_plus === false || $new_ip_minus === false) {
+            return false;
+        }
+        return [
+            'plus' => trim($new_ip_plus),
+            'minus' => trim($new_ip_minus),
+        ];
+    }
+    return false;
+}
+if(!empty($concurrentIpAddr))
+{
+    $convertedBetweenIP = generate_neighbor_ips($concurrentIpAddr);
+    if($convertedBetweenIP !== false)
+    {
+        $nextIpAddress = $convertedBetweenIP['plus'];
+        $previousIpAddress = $convertedBetweenIP['minus'];
+    }
+}
 
 /**
  * Fetch IP info from IPDB API and populate variables.
