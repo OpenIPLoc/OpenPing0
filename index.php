@@ -805,13 +805,12 @@ include_once(__DIR__.'/utils.php');
     .websites>a{
         margin-top: 10px;
         overflow:hidden;
-        width:130px;
-        height: 30px;
     }
     .websites>a>img{
         width: 130px;
         height: 30px;
         border-radius: 3px;
+        border: 2px solid #000;
     }
     #ad_right{
         position: absolute;
@@ -1158,15 +1157,13 @@ include_once(__DIR__.'/utils.php');
     </div>
     <div class="container">
         <div class="aditems toprow">
-            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(3)">
-                <span class="closead">关闭</span>
-                <span class="tipad">广告</span>
-                <img src="/static/images/ad/8c0e97165f9193cadf2d90966867b770.gif" width="100%" style="max-height: 70px;">
+            <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
+
             </a>
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
 
             </a>
-            <a rel="noopener nofollow" href="https://www.62v.net" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
+            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
                 <span class="closead">关闭</span>
                 <span class="tipad">广告</span>
                 <img src="/static/images/ad/68b1bff33a5e068b1c0a6cbb72.gif" width="100%" style="max-height: 70px;">
@@ -1491,7 +1488,10 @@ Ping0 通过大数据监测IP是否有扫描，爆破，爬虫，对外攻击，
                 <a href="/" target="_blank" rel="noopener nofollow sponsored" @click="trackad(1007)" title="全球领先代理IP服务，提供纯净独享的静态住宅IP、数据中心IP、动态住宅7000W代理IP池，高速稳定，免费试用。">
                     <img src="/static/images/ad/subset/6e580e53ef140296260b34167e53ab52.png" alt="">
                 </a>
-            </div>
+                                <a href="/" target="_blank" rel="noopener nofollow sponsored" @click="trackad(1008)" title="UnoProxy 提供覆盖全球的高匿名、高速度代理IP服务，支持住宅IP、ISP代理、静态与动态IP，轻松应对多账号管理、网络爬虫、电商防封等场景，助力用户高效出海与数据采集。">
+                    <img src="/static/images/ad/subset/67f4dd52a15901223f9314e86632102a.jpg" alt="">
+                </a>
+                            </div>
         </div>
 
     </div>
