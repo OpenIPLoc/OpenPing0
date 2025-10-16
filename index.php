@@ -1157,13 +1157,15 @@ include_once(__DIR__.'/utils.php');
     </div>
     <div class="container">
         <div class="aditems toprow">
-            <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
-
+            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(3)">
+                <span class="closead">关闭</span>
+                <span class="tipad">广告</span>
+                <img src="/static/images/ad/8c0e97165f9193cadf2d90966867b770.gif" width="100%" style="max-height: 70px;">
             </a>
             <a rel="noopener nofollow" target="_blank" style="display:block; flex: 1;position: relative;">
 
             </a>
-            <a rel="noopener nofollow" href="https://www.cheatfirst.com" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
+            <a rel="noopener nofollow" href="https://www.die.lu" target="_blank" style="display:block; flex: 1;position: relative;" @click="trackad(8)">
                 <span class="closead">关闭</span>
                 <span class="tipad">广告</span>
                 <img src="/static/images/ad/68b1bff33a5e068b1c0a6cbb72.gif" width="100%" style="max-height: 70px;">

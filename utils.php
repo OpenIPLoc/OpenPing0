@@ -35,20 +35,24 @@ function get_reverse_hostname($ipyard_ip) {
 $partCount = count($parts);
 if ($partCount > 1 && strtolower($parts[0]) === 'ip') {
     $candidate = rawurldecode(trim($parts[1]));
-    if($candidate === 'getdns' || $candidate === 'peer')
-    {
-        switch ($candidate) {
-	        case 'getdns':
-			{
-				echo get_reverse_hostname(rawurldecode($parts[2])) ?? "ipyard.com";
-				break;
-			}
-	        default:
-		        http_response_code(204);
-		        break;
-        }
-        exit;
-    }
+	switch($candidate)
+	{
+		case 'getdns':
+		{
+			echo get_reverse_hostname(rawurldecode($parts[2])) ?? "ipyard.com";
+			exit;
+		}
+		case 'peer':
+		{
+			http_response_code(204);
+			exit;
+		}
+		case 'errorreport':
+		{
+			echo '"success"';
+			exit;
+		}
+	}
     if (
         filter_var($candidate, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
         filter_var($candidate, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
